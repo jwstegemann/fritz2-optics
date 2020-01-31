@@ -1,0 +1,8 @@
+**/build/
+**/gradlew
+**/gradlew.bat
+**/.gradle/
+**/.idea/
+**/.github/
+**/gradle/
+/examples/nestedmodel/model/src/main/kotlin/io/fritz2/examples/nestedmodel/Optics.kt
