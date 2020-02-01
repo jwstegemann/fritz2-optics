@@ -23,8 +23,6 @@ class LensesProcessor() : AbstractProcessor() {
 
     override fun process(roundEnvironment: RoundEnvironment) {
 
-        log("########### sdfksjdnfksjdnfksjd ###############")
-
         roundEnvironment.getElementsAnnotatedWith(optics).forEach { element ->
             when (element) {
                 is Element.ClassElement -> {

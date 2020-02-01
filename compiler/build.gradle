@@ -20,7 +20,7 @@ buildscript {
 
 apply plugin: "org.jetbrains.kotlin.jvm"
 apply plugin: "kotlin-kapt"
-apply plugin: "maven"
+apply plugin: "maven-publish"
 
 repositories {
     mavenCentral()
@@ -40,4 +40,15 @@ dependencies {
 
 kapt {
     includeCompileClasspath = true
+}
+
+publishing {
+    publications {
+        maven(MavenPublication) {
+            groupId = 'io.fritz2.optics'
+            artifactId = 'compiler'
+
+            from components.java
+        }
+    }
 }
