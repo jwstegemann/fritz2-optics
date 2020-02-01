@@ -38,5 +38,7 @@ dependencies {
 }
 
 kapt {
-    includeCompileClasspath = true
+    useBuildCache = false
+    processors("io.fritz2.optics.LensesProcessor")
+    includeCompileClasspath = false
 }
