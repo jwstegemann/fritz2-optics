@@ -13,16 +13,17 @@ import org.jetbrains.kotlin.js.descriptorUtils.getJetTypeFqName
 import org.jetbrains.kotlin.name.FqNameUnsafe
 import org.jetbrains.kotlin.platform.TargetPlatform
 import org.jetbrains.kotlin.resolve.descriptorUtil.fqNameSafe
-import org.jetbrains.kotlin.resolve.descriptorUtil.fqNameUnsafe
 import java.io.File
-import kotlin.random.Random
 import com.squareup.kotlinpoet.ParameterizedTypeName.Companion.plusParameter
+
 
 class LensesProcessor() : AbstractProcessor() {
     val optics = Lenses::class.java.name
     val annotatedClasses = mutableListOf<ClassDescriptor>()
 
     override fun process(roundEnvironment: RoundEnvironment) {
+
+        log("########### sdfksjdnfksjdnfksjd ###############")
 
         roundEnvironment.getElementsAnnotatedWith(optics).forEach { element ->
             when (element) {

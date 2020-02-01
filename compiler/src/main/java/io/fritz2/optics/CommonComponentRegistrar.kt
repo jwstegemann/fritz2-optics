@@ -20,7 +20,7 @@ open class CommonComponentRegistrar : ComponentRegistrar {
             project: MockProject,
             configuration: CompilerConfiguration
     ) {
-        val processor = MpAptTestProcessor()
+        val processor = LensesProcessor()
         val mpapt = MpAptProject(processor,configuration)
         StorageComponentContainerContributor.registerExtension(project,mpapt)
         ClassBuilderInterceptorExtension.registerExtension(project,mpapt)

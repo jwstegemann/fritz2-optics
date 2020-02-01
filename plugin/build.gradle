@@ -29,7 +29,6 @@ apply plugin: "java-gradle-plugin"
 apply plugin: "kotlin-kapt"
 apply plugin: "maven"
 
-
 gradlePlugin {
     plugins {
         simplePlugin {
