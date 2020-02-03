@@ -10,7 +10,6 @@ import de.jensklingenberg.mpapt.utils.KotlinPlatformValues
 import org.jetbrains.kotlin.descriptors.ClassDescriptor
 import org.jetbrains.kotlin.descriptors.ValueParameterDescriptor
 import org.jetbrains.kotlin.js.descriptorUtils.getJetTypeFqName
-import org.jetbrains.kotlin.name.FqNameUnsafe
 import org.jetbrains.kotlin.platform.TargetPlatform
 import org.jetbrains.kotlin.resolve.descriptorUtil.fqNameSafe
 import java.io.File
@@ -66,10 +65,12 @@ class LensesProcessor() : AbstractProcessor() {
             .addComment(" - NEVER CHANGE CONTENT MANUALLY!")
             .addImport("io.fritz2.optics", "buildLens")
 
-        annotatedClasses.flatMap { buildFunctionsForClass(it) }.forEach {
-            fileSpecBuilder.addProperty(it.property)
-            //fileSpecBuilder.addFunction(it.extension)
+        val lensesObject = TypeSpec.objectBuilder("Lenses")
+        annotatedClasses.forEach {
+            lensesObject.addType(buildClassObject(it))
         }
+
+        fileSpecBuilder.addType(lensesObject.build())
 
         //FIXME: better way to determine source path
         val filepath = annotatedClasses.first().guessingSourceSetFolder().substringBefore(packageName.replace('.','/'))
@@ -77,10 +78,13 @@ class LensesProcessor() : AbstractProcessor() {
     }
 
 
-    private fun buildFunctionsForClass(classDescriptor: ClassDescriptor): List<LensSpecs> =
-        classDescriptor.constructors.first().valueParameters.map {
-            buildExtensionFunction(classDescriptor, it)
+    private fun buildClassObject(classDescriptor: ClassDescriptor): TypeSpec {
+        val classObject = TypeSpec.objectBuilder(classDescriptor.fqNameUnsafe.shortName().toString())
+        classDescriptor.constructors.first().valueParameters.forEach {
+            classObject.addProperty(buildProperty(classDescriptor, it))
         }
+        return classObject.build()
+    }
 
     private fun stringToClassName(name: String): TypeName {
         val hasParam = name.contains('<')
@@ -101,7 +105,7 @@ class LensesProcessor() : AbstractProcessor() {
     }
 
 
-    private fun buildExtensionFunction(classDescriptor: ClassDescriptor, parameterDescriptor: ValueParameterDescriptor): LensSpecs {
+    private fun buildProperty(classDescriptor: ClassDescriptor, parameterDescriptor: ValueParameterDescriptor): PropertySpec {
 
         val outerTypeName = stringToClassName(classDescriptor.defaultType.getJetTypeFqName(false))
         val innerTypeName = stringToClassName(parameterDescriptor.type.getJetTypeFqName(true))
@@ -112,28 +116,9 @@ class LensesProcessor() : AbstractProcessor() {
             .plusParameter(outerTypeName)
             .plusParameter(innerTypeName)
 
-        //TODO: TypeParameters, Typed data classes?
-        val outerNamePart = classDescriptor.fqNameUnsafe.shortName()
-
-//        val outerNamePart = outerTypeName.toString()
-//            .replace('.','_')
-//            .replace('<','-')
-//            .replace('>','-')
-
-        //val propertyName = ("Lens_${outerNamePart}_$attributeName").take(255)
-        val propertyName = ("${outerNamePart}${attributeName.capitalize()}Lens").take(255)
-
-        val property = PropertySpec.builder(propertyName, lensTypeName)
+        return PropertySpec.builder(attributeName, lensTypeName)
             .initializer("buildLens({ it.$attributeName },{ p, v -> p.copy($attributeName = v)})")
             .build()
-
-        val extension = FunSpec.builder("${attributeName}Lens")
-            .addModifiers(KModifier.INLINE)
-            .receiver(outerTypeName)
-            .addStatement("return $propertyName")
-            .build()
-
-        return LensSpecs(property, extension)
     }
 
 }
