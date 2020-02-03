@@ -117,7 +117,7 @@ class LensesProcessor() : AbstractProcessor() {
             .plusParameter(innerTypeName)
 
         return PropertySpec.builder(attributeName, lensTypeName)
-            .initializer("buildLens({ it.$attributeName },{ p, v -> p.copy($attributeName = v)})")
+            .initializer("buildLens(%S, { it.$attributeName },{ p, v -> p.copy($attributeName = v)})", attributeName)
             .build()
     }
 
