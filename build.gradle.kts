@@ -12,7 +12,7 @@ buildscript {
     }
 }
 
-apply(plugin = "com.jfrog.bintray")
+//apply(plugin = "com.jfrog.bintray")
 
 allprojects {
     repositories {
@@ -26,6 +26,3 @@ subprojects {
     group = "io.fritz2.optics"
     version = "0.1"
 }
-
-val bintrayUpload by tasks
-bintrayUpload.enabled = false
