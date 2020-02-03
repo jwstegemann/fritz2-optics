@@ -8,12 +8,13 @@ buildscript {
 
     dependencies {
         classpath(kotlin("gradle-plugin", version = "1.3.61"))
+        classpath("com.jfrog.bintray.gradle:gradle-bintray-plugin:1.+")
     }
 }
 
-allprojects {
-    //TODO: manage common setting and dependencies
+apply(plugin = "com.jfrog.bintray")
 
+allprojects {
     repositories {
         mavenLocal()
         mavenCentral()
@@ -25,3 +26,6 @@ subprojects {
     group = "io.fritz2.optics"
     version = "0.1"
 }
+
+val bintrayUpload by tasks
+bintrayUpload.enabled = false

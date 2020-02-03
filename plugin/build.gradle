@@ -9,6 +9,7 @@ buildscript {
     dependencies {
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
         classpath 'com.github.jengelman.gradle.plugins:shadow:5.0.0'
+        classpath 'com.jfrog.bintray.gradle:gradle-bintray-plugin:1.+'
     }
 
     allprojects {
@@ -27,6 +28,8 @@ plugins {
 apply plugin: "java-gradle-plugin"
 apply plugin: "kotlin-kapt"
 apply plugin: "maven-publish"
+apply plugin: "com.jfrog.bintray"
+
 
 gradlePlugin {
     plugins {
@@ -43,3 +46,39 @@ dependencies {
     compileOnly "com.google.auto.service:auto-service:1.0-rc6"
     kapt "com.google.auto.service:auto-service:1.0-rc6"
 }
+
+kapt {
+    includeCompileClasspath = true
+}
+
+
+bintray {
+    user = 'jwstegemann'
+    key = 'e7f2e4f8baceb9026eb4c1afba7922aa4c58516c'
+    pkg {
+        repo = 'fritz2'
+        name = 'optics-gradle-plugin'
+        userOrg = 'jwstegemann'
+        licenses = ['MIT']
+        vcsUrl = 'https://github.com/jwstegemann/fritz2-optics'
+        version {
+            name = '0.1'
+            desc = 'fritz2-optics gradle-plugin'
+            released  = new Date()
+            vcsTag = 'v0.1'
+        }
+    }
+    publications = ['BintrayPublication']
+}
+
+publishing {
+    publications {
+        BintrayPublication(MavenPublication) {
+            from components.java
+            groupId 'io.fritz2.optics'
+            artifactId 'plugin'
+            version '0.1'
+        }
+    }
+}
+
