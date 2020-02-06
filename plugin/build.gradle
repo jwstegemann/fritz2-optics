@@ -52,10 +52,14 @@ kapt {
     includeCompileClasspath = true
 }
 
+task sourcesJar(type: Jar, dependsOn: classes) {
+    classifier = 'sources'
+    from sourceSets.main.allSource
+}
 
 bintray {
     user = 'jwstegemann'
-    key = 'd45b1f0b8864caa26d99e5c4e522ec567dc79f71'
+    key = System.getProperty('BINTRAY_API_KEY')
     pkg {
         repo = 'fritz2'
         name = 'optics-gradle-plugin'
@@ -79,6 +83,9 @@ publishing {
             groupId 'io.fritz2.optics'
             artifactId 'plugin'
             version '0.1'
+            artifact sourcesJar {
+                classifier "sources"
+            }
         }
     }
 }

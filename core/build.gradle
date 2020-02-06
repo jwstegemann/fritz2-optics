@@ -57,7 +57,7 @@ kotlin {
 
 bintray {
     user = 'jwstegemann'
-    key = 'd45b1f0b8864caa26d99e5c4e522ec567dc79f71'
+    key = System.getProperty('BINTRAY_API_KEY')
     pkg {
         repo = 'fritz2'
         name = 'optics-core'
