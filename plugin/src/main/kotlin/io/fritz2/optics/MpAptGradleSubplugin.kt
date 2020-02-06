@@ -23,6 +23,8 @@ class MpAptGradleSubplugin : KotlinGradleSubplugin<AbstractCompile> {
 
     }
 
+
+
     override fun isApplicable(project: Project, task: AbstractCompile) =
             project.plugins.hasPlugin(MpAptGradlePlugin::class.java)
 

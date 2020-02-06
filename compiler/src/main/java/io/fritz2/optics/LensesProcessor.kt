@@ -74,6 +74,7 @@ class LensesProcessor() : AbstractProcessor() {
 
         //FIXME: better way to determine source path
         val filepath = annotatedClasses.first().guessingSourceSetFolder().substringBefore(packageName.replace('.','/'))
+        //val srcPath = annotatedClasses.first().guessingSourceSetFolder().substringBefore("/main/kotlin/" + packageName.replace('.','/'))
         fileSpecBuilder.build().writeTo(File(filepath))
     }
 

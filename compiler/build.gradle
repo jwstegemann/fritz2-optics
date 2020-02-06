@@ -50,7 +50,7 @@ kapt {
 
 bintray {
     user = 'jwstegemann'
-    key = 'secret'
+    key = 'd45b1f0b8864caa26d99e5c4e522ec567dc79f71'
     pkg {
         repo = 'fritz2'
         name = 'optics-compiler-plugin'
