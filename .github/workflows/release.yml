@@ -5,7 +5,7 @@ on:
     types: [published, updated]
 
 jobs:
-  build:
+  publish:
 
     runs-on: ubuntu-latest
 
