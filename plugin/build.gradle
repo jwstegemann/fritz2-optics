@@ -67,10 +67,10 @@ bintray {
         licenses = ['MIT']
         vcsUrl = 'https://github.com/jwstegemann/fritz2-optics'
         version {
-            name = '0.1'
+            name = '0.2'
             desc = 'fritz2-optics gradle-plugin'
             released  = new Date()
-            vcsTag = 'v0.1'
+            vcsTag = 'v0.2'
         }
     }
     publications = ['BintrayPublication']
@@ -82,7 +82,7 @@ publishing {
             from components.java
             groupId 'io.fritz2.optics'
             artifactId 'plugin'
-            version '0.1'
+            version '0.2'
             artifact sourcesJar {
                 classifier "sources"
             }

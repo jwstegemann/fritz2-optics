@@ -24,5 +24,5 @@ allprojects {
 
 subprojects {
     group = "io.fritz2.optics"
-    version = "0.1"
+    version = "0.2"
 }
