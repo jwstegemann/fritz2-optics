@@ -7,12 +7,9 @@ buildscript {
     }
 
     dependencies {
-        classpath(kotlin("gradle-plugin", version = "1.3.61"))
-        classpath("com.jfrog.bintray.gradle:gradle-bintray-plugin:1.+")
+        classpath(kotlin("gradle-plugin", version = "1.3.72"))
     }
 }
-
-//apply(plugin = "com.jfrog.bintray")
 
 allprojects {
     repositories {
